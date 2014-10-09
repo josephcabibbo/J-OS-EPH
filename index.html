@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+   <meta name="author"             content="Joey Cabibbo" />
+   <link rel="stylesheet" href="j(os)eph.css" type="text/css" media="screen" />
+   <title>
+      J(OS)EPH by Joey Cabibbo
+   </title>
+
+   <!-- Globals CONSTANTS and _Variables. Must included be first. -->
+   <script type="text/javascript" src="globals.js"></script>	
+
+   <!-- Host (Hardware Simulation) Routines -->
+   <script type="text/javascript" src="scripts/host/control.js"></script>
+   <script type="text/javascript" src="scripts/host/devices.js"></script>
+   <script type="text/javascript" src="scripts/host/cpu.js"></script>
+   <script type="text/javascript" src="scripts/host/memory.js"></script>
+   <script type="text/javascript" src="scripts/host/hardwareServices.js"></script>
+
+   <!-- Virtual OS Routines: Make sure Kernel code is last, since it needs those above it. -->
+   <script type="text/javascript" src="scripts/os/interrupt.js"></script>
+   <script type="text/javascript" src="scripts/os/canvastext.js"></script>	
+   <script type="text/javascript" src="scripts/os/console.js"></script>
+   <script type="text/javascript" src="scripts/os/memoryManager.js"></script>
+   <script type="text/javascript" src="scripts/os/programValidation.js"></script>   
+   <script type="text/javascript" src="scripts/os/processControlBlock.js"></script>   
+   <script type="text/javascript" src="scripts/os/programLoader.js"></script> 
+   <script type="text/javascript" src="scripts/os/scheduler.js"></script> 
+   <script type="text/javascript" src="scripts/os/deviceDriver.js"></script>
+   <script type="text/javascript" src="scripts/os/deviceDriverKeyboard.js"></script>
+   <script type="text/javascript" src="scripts/os/deviceDriverFileSystem.js"></script>
+   <script type="text/javascript" src="scripts/os/queue.js"></script>
+   <script type="text/javascript" src="scripts/os/priorityQueue.js"></script>
+   <script type="text/javascript" src="scripts/os/shell.js"></script>
+   <script type="text/javascript" src="scripts/os/kernel.js"></script>
+   
+   <!-- Other Routines -->
+   <script type="text/javascript" src="scripts/utils.js"></script>	
+</head>
+
+<body onload="simInit();">
+
+	<table id="tableDisplay">
+		<!-- Row 1 -->
+		<tr>
+			<!-- Row 1 Cell 1 -->
+			<td>
+				<input type="button"
+					   id = "btnStartOS"
+					   name="brnStartOS"
+					   class="large_button"
+					   value="Start"
+					   tabindex="0"
+					   onclick="simBtnStartOS_click(this)"
+				/>
+				<input type="button"
+					   id = "btnHaltOS"
+					   name="brnHaltOS"
+					   class="large_button"
+					   disabled="disabled"
+					   value="Halt"
+					   tabindex="1"
+					   onclick="simBtnHaltOS_click(this)"
+				/>            
+				<input type="button"
+					   id = "btnReset"
+					   name="brnReset"
+					   class="large_button"
+					   disabled="disabled"
+					   value="Reset"
+					   tabindex="2"
+					   onclick="simBtnReset_click(this)"
+				/>
+				<input type="button"
+					   id = "btnStep"
+					   name="brnStep"
+					   class="large_button"
+					   disabled="disabled"
+					   value="Step"
+					   tabindex="3"
+					   onclick="simSingleStep_click(this)"
+				/>
+			</td>
+			<!-- Row 1 Cell 2 -->
+			<td class="label">
+				<b>Control Log</b>
+			</td>
+			<!-- Row 1 Cell 3 -->
+			<td id="hardwareLabel" class="label">Memory Display</td>
+		</tr>
+		<!-- Row 2 -->
+		<tr valign="top">
+			<!-- Row 2 Cell 1 -->
+			<td>
+				<canvas id="display"
+						width="500px"
+						height="450px"
+						tabindex="3">
+				</canvas>
+			</td>
+			<!-- Row 2 Cell 2 -->
+			<td>
+				<textarea name="taLog"
+						  id = "taLog"
+						  style="resize: none"
+						  readonly		<!-- Make the log non-editable -->
+				</textarea>
+			<!-- Row 2 Cell 3 -->
+			<td>
+				<div id="storageDisplay">
+					<!-- Scrolling Table-->
+					<table id="storageTable" class="hardwareDataCells" border="1">
+						<!-- Fill table programmatically in hardwareServices.js -->
+					</table>
+				</div>
+				<input type="button"
+					   id = "btnChangeStorageDisplay"
+					   name="btnChangeStorageDisplay"
+					   class="xlarge_button"
+					   value="View File System"
+					   onclick="simSwitchStorageDisplay_click(this)"
+				/>
+				<div id="cpuDisplay">
+					<table id="cpuTable" border ="1">
+						<tr align="center">
+							<tr>
+								<th colspan="5">
+									CPU
+								</th>        
+							</tr>
+						</tr>
+						<th>PC</th>
+						<th>ACC</th>
+						<th>X</th>
+						<th>Y</th>
+						<th>Z</th>
+						<tr id="cpuData" class="hardwareDataCells">
+							<td name="cpuData">&nbsp;</td>
+							<td name="cpuData">&nbsp;</td>
+							<td name="cpuData">&nbsp;</td>
+							<td name="cpuData">&nbsp;</td>
+							<td name="cpuData">&nbsp;</td>
+						<tr>
+						<tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<!-- Row 3 -->
+		<tr>
+			<!-- Row 3 Cell 1 -->
+			<td>
+				<div id="statusBar">
+					<div id="date"></div>
+					<br>
+					<div id="status"></div>
+				</div>
+			</td>
+			<!-- Row 3 Cell 2 -->
+			<td>
+				<textarea name="taProgramArea"
+						  id = "taProgramArea"
+						  style="resize: none"
+						  placeholder="Enter Program Here"
+				></textarea>
+				<input type="button"
+					   id = "btnProgram1"
+					   name="btnProgram1"
+					   class="normal_button"
+					   value="Program 1"
+					   onclick="simProgram1_click(this)"
+				/>
+				<input type="button"
+					   id = "btnProgram2"
+					   name="btnProgram2"
+					   class="normal_button"
+					   value="Program 2"
+					   onclick="simProgram2_click(this)"
+				/>            
+				<input type="button"
+					   id = "btnProgram3"
+					   name="btnProgram3"
+					   class="normal_button"
+					   value="Program 3"
+					   onclick="simProgram3_click(this)"
+			</td>
+			<!-- Row 3 Cell 3 -->
+			<td>
+				<div id="readyQueueDisplay">
+					<table id="readyQueueTable" border ="1">
+						<tr align="center">
+							<tr>
+								<th colspan="4">
+									Ready Queue
+								</th>        
+							</tr>
+						</tr>
+						<th>PID</th>
+						<th>State</th>
+						<th>Base</th>
+						<th>Limit</th>
+						<tr id="readyQueueSlotOne" class="hardwareDataCells">
+							<td name="RQ1">&nbsp;</td>
+							<td name="RQ1">&nbsp;</td>
+							<td name="RQ1">&nbsp;</td>
+							<td name="RQ1">&nbsp;</td>
+						<tr>
+						<tr id="readyQueueSlotTwo" class="hardwareDataCells">
+							<td name="RQ2">&nbsp;</td>
+							<td name="RQ2">&nbsp;</td>
+							<td name="RQ2">&nbsp;</td>
+							<td name="RQ2">&nbsp;</td>
+						<tr>
+						<tr id="readyQueueSlotThree" class="hardwareDataCells">
+							<td name="RQ3">&nbsp;</td>
+							<td name="RQ3">&nbsp;</td>
+							<td name="RQ3">&nbsp;</td>
+							<td name="RQ3">&nbsp;</td>
+						<tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+
+	<p></p>
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr valign="top">
+			<td align="center" class="footer">
+				Copyright &copy; 2008 - 2012 No Rights Reserved. - 
+				Reproduction is prohibited without the express written consent of 
+				Ted Codd, Stevie Ray Vaughan, and Ian Fleming.
+			</td>
+		</tr>
+	</table>
+	
+</body>
+</html>

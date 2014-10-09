@@ -1,0 +1,224 @@
+/* j(os)eph.css */
+
+/* Note: All magic numbers just to calm my formatting OCD */
+
+body
+{
+	background-color: #909193;	/* The bottom color of background.jpg. */
+	background-image: url(images/background.jpg);
+	background-repeat: repeat-x;
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+	font-size: 10pt;
+	font-weight: normal;
+	font-style: normal;
+	margin-left: auto;   /*My attemp of centering the body?*/
+	margin-right: auto;
+	width: 95em;
+}
+
+h1 
+{ 
+    color: black;
+	font-size:   24pt;
+	font-weight: normal;
+	font-style: normal;	
+    border-bottom: 1px solid #dad8ed;  
+}
+
+h2
+{
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+	font-size:   16pt;
+	font-weight: normal;
+	font-style: normal;	
+}
+
+p.breadcrumbs
+{
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    line-height: normal;
+    color: green;
+    position: relative;
+    top: -16px;
+}
+
+td.section
+{
+	border-top: 2px solid blue;
+	padding-top: 6px;
+	padding-bottom: 6px;	
+}
+
+td.heading
+{
+	background-color: black;
+	color: white;
+	font-weight: normal;
+	font-style: normal;
+}
+
+#tableDisplay
+{
+	 border:2px solid white; 
+	 padding: 5px;
+}
+
+#frame
+{
+    width: 800px;
+	height:1000px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    padding: 10px;			/* set in init() */
+    border-width: 6px;		/* set in init() */
+    border-style: double;
+    border-color: #dad8ed;  /* "circles" light-blueish */
+}
+
+#display 
+{
+	background-color: #D0D0D0;
+	border: 2px groove black;
+	cursor: default;
+}
+
+.subheading
+{
+	font-weight: normal;
+	font-style: italic;
+}
+
+.instructions
+{
+	font-size:10pt;
+	font-weight: normal;
+	font-style: normal;	
+}
+
+.widget
+{
+	width:100%;
+	position: relative;	
+	background-color: #dad8ed; /* was #99ffff */;
+	border: 1px solid blue;	
+}
+
+.small_button
+{
+	width: 60px;
+}
+
+.normal_button
+{
+	width: 116px;
+}
+
+.large_button
+{
+	width: 123px;
+}
+
+.xlarge_button
+{
+	width: 360px;
+}
+
+.footer 
+{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+}
+
+.label
+{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+	font-size: 14pt;
+	text-align: center;
+}
+
+#statusBar
+{
+    height: 113px;
+    width: 500px;
+    background: #787878;
+    border: 2px groove black;
+    overflow:auto;
+    font-family: Arial, Helvetica, sans-serif;
+	font-size: 14pt;
+	color: #FFFFFF;
+	text-align:center;
+}
+
+#taProgramArea
+{
+	text-align: center;
+	border: 2px groove black;
+	height: 85px; /*was 111*/
+    width: 350px;
+}
+
+#taLog
+{
+	height: 445px;
+    width: 350px;
+	border: 2px groove black;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+}
+
+/* Hardware Displays (Column 3) */
+
+.hardwareDataCells
+{
+	text-align: center;
+}
+
+#storageDisplay
+{
+	border: 2px groove black;
+	height: 340px;
+    width: 355px;
+    margin-bottom:5px;
+	background: #787878;
+	overflow: auto;
+}
+
+#storageTable
+{
+	height: 340px;
+    width: 355px;
+}
+
+#cpuDisplay
+{
+	margin-top:5px;
+	border: 2px groove black;
+	height: 73px;
+    width: 355px;
+	background: #787878;
+}
+
+#cpuTable
+{
+	height: 70px;
+    width: 355px;
+}
+
+#readyQueueDisplay
+{
+	border: 2px groove black;
+	height: 117px;
+    width: 355px;
+	background: #787878;
+}
+
+#readyQueueTable
+{
+	height: 75px;
+    width: 355px;
+}
